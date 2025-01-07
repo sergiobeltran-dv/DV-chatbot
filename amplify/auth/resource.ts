@@ -7,20 +7,65 @@ import { defineAuth } from '@aws-amplify/backend';
 export const auth = defineAuth({
   loginWith: {
     email: true,
-    // Add additional authentication methods as needed
-    // phone: true,
-    // socialProviders: ['google', 'facebook']
+    username: false,
+    phone: false
   },
-  // Optional: Configure multi-factor authentication
-  multiFactor: {
+  // Cognito User Pool configuration
+  userAttributes: {
+    // Required attributes
+    email: {
+      required: true,
+      mutable: true
+    },
+    // Optional attributes
+    name: {
+      required: false,
+      mutable: true
+    },
+    // Custom attributes
+    company: {
+      required: false,
+      mutable: true
+    },
+    role: {
+      required: false,
+      mutable: true
+    }
+  },
+  // Multi-factor authentication settings
+  multifactor: {
     mode: 'OPTIONAL',
+    sms: true,
+    totp: true
   },
-  // Optional: Configure password policies
+  // Password policy
   passwordPolicy: {
     minLength: 8,
-    requireNumbers: true,
-    requireSpecialCharacters: true,
-    requireUppercase: true,
     requireLowercase: true,
+    requireUppercase: true,
+    requireNumbers: true,
+    requireSpecialCharacters: true
   },
+  // Email verification
+  verification: {
+    email: {
+      emailSubject: 'Welcome to Datavail AI - Verify your email',
+      emailBody: 'Thanks for signing up! Your verification code is: {####}',
+      emailStyle: 'CODE'
+    }
+  },
+  // Session management
+  sessionManagement: {
+    requiresUserPresence: true,
+    timeoutInMinutes: 60
+  },
+  // Advanced security features
+  advancedSecurityMode: 'AUDIT',
+  // Account recovery
+  accountRecovery: 'EMAIL_ONLY',
+  // Sign-up settings
+  signUpVerification: {
+    attributesToVerify: ['email'],
+    verificationEmailStyle: 'CODE'
+  }
 });
