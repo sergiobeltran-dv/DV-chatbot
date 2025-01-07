@@ -3,7 +3,7 @@ import { a, defineData } from '@aws-amplify/backend';
 const schema = a.schema({
   // Main chat conversation route
   chatAssistant: a.conversation({
-    aiModel: a.ai.model('Claude-3-Sonnet'),
+    aiModel: a.ai.model('Claude 3.5 Sonnet'),
     systemPrompt: `You are Datavail AI, a helpful assistant that specializes in providing technical and business solutions. 
     You should:
     - Be professional and courteous
@@ -15,7 +15,7 @@ const schema = a.schema({
 
   // File analysis route for handling document queries
   analyzeDocument: a.generation({
-    aiModel: a.ai.model('Claude-3-Sonnet'),
+    aiModel: a.ai.model('Claude 3.5 Sonnet'),
     systemPrompt: 'You are a document analysis assistant. Extract and analyze the content of provided documents.',
   })
   .arguments({
